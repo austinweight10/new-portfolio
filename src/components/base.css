@@ -1,0 +1,40 @@
+.grid__item-img {
+  display: block;
+}
+
+.grid__item-img canvas {
+  height: 100%;
+  position: fixed;
+  width: 100vw !important;
+  height: 100vh !important;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+}
+
+.grid__item-img img {
+  height: 100%;
+  display: block;
+}
+
+.grid__item-img img:nth-child(2) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.js .grid__item-img img {
+  display: none;
+}
+
+.theme-2 {
+  --item-bg: rgba(0, 0, 0, 0.2);
+  --item-link: #fff;
+  --item-link-hover: #fff;
+  --item-meta: #fff;
+  --item-title: #fff;
+  --item-subtitle: #fff;
+  --item-text: #fff;
+}
