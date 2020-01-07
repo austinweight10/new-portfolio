@@ -97,18 +97,22 @@ const Work = memo(({ openProject, setProject, setBackground }) => {
   const index = useRef(0)
   const { innerWidth } = useWindowSize()
 
-  const pageDivisions = window.innerWidth < 950 ? 100 : 4
-  const pageDivisions2 = window.innerWidth < 950 ? 1 : 2
+  const pageDivisions =
+    typeof window !== `undefined` ? (window.innerWidth < 950 ? 100 : 4) : 4
+  const pageDivisions2 =
+    typeof window !== `undefined` ? (window.innerWidth < 950 ? 1 : 2) : 2
+
+  const windowSize = typeof window !== `undefined` ? window.innerWidth : 1000
 
   const [props, set] = useSprings(pages.length, i => ({
-    x: (i * window.innerWidth) / pageDivisions,
+    x: (i * windowSize) / pageDivisions,
     sc: 1,
     display: "block",
   }))
 
   const bind = useGesture(
     ({ down, delta: [xDelta], direction: [xDir], distance, cancel }) => {
-      if (down && distance > window.innerWidth / pageDivisions / pageDivisions2)
+      if (down && distance > windowSize / pageDivisions / pageDivisions2)
         cancel(
           (index.current = clamp(
             index.current + (xDir > 0 ? -1 : 1),
@@ -120,10 +124,10 @@ const Work = memo(({ openProject, setProject, setBackground }) => {
         if (i < index.current - 1 || i > index.current + 1)
           return { display: "none" }
         const x =
-          ((i - index.current) * window.innerWidth) / pageDivisions +
+          ((i - index.current) * windowSize) / pageDivisions +
           (down ? xDelta : 0)
         const sc = down
-          ? 1 - distance / window.innerWidth / pageDivisions / pageDivisions2
+          ? 1 - distance / windowSize / pageDivisions / pageDivisions2
           : 1
         return { x, sc, display: "block" }
       })

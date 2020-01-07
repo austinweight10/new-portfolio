@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useSpring, animated } from "react-spring"
 import styled from "styled-components"
 import CV from "../images/Austin-Weight-CV.pdf"
