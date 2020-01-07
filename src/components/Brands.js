@@ -18,15 +18,9 @@ import moo from "../images/clients/moo.png"
 import whistles from "../images/clients/whistles.png"
 import cursor from "../images/clickToSwap.png"
 
-// need a click me cursor
-// add a hover state / more dropshadow
-// todo a way better switch, diagonal or spin
-// sort images pixilated
-// perhaps simular enlarge to download cv
-
 const BrandsSC = styled.div`
-  width: 100vw;
-  height: auto;
+  width: 100%;
+  height: 100%;
   position: relative;
   margin: 0;
   padding: 0;
@@ -43,13 +37,10 @@ const BrandsSC = styled.div`
   -webkit-box-shadow: ${props =>
     props.hideShadow ? null : "-48px -48px 20px -50px #ff5733"};
 
-  ${"" /* -webkit-transition: all 200ms linear;
-  -ms-transition: all 200ms linear;
-  transition: all 200ms linear; */}
-  &:hover {
-    transform: scale(1.05);
-    z-index: 2;
-  }
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 5;
+  grid-row-end: 5;
 
   > div {
     width: 100%;
@@ -84,11 +75,17 @@ const BrandsSC = styled.div`
 
   @media only screen and (min-width: 950px) {
     width: auto;
+    height: auto;
     margin: 0 0 15% 15%;
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 3;
     grid-row-end: 4;
+
+    &:hover {
+      transform: scale(1.05);
+      z-index: 2;
+    }
   }
 `
 

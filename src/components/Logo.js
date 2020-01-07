@@ -7,10 +7,15 @@ import logo from "../images/logo/AustinWeight.gif"
 import logoGif from "../images/logo/AustinWeightLogo.gif"
 
 const LogoSC = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: relative;
   padding: 0;
+
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 1;
 
   > div {
     cursor: -webkit-grab;
@@ -19,7 +24,7 @@ const LogoSC = styled.div`
     justify-content: center;
     width: 200px;
     height: 200px;
-    margin: calc(50% - 100px) auto auto;
+    margin: 50% auto auto;
     justify-content: center;
     background-position: center;
     background-size: contain;

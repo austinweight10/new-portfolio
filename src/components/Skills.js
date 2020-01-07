@@ -5,27 +5,29 @@ import { useGesture } from "react-use-gesture"
 import { useSprings, animated, interpolate } from "react-spring"
 import styled from "styled-components"
 
-// add a really cool hover effect to each one
-// like a shimmer with slight scale increase
-
 const SkillsSC = styled.div`
-  width: 100vw;
-  height: auto;
+  width: 100%;
+  height: 100%;
   position: relative;
   overflow: scroll;
   cursor: grab;
   border-radius: 5px;
+  margin-bottom: 40px;
 
   transition: box-shadow 3s;
   transition-delay: 1s;
 
-  ${"" /* todo make sure everything uses webkit */}
   box-shadow: ${props =>
     props.hideShadow ? null : "13px 15px 10px 1px #e8e8e8"};
   -moz-box-shadow: ${props =>
     props.hideShadow ? null : "13px 15px 10px 1px #e8e8e8"};
   -webkit-box-shadow: ${props =>
     props.hideShadow ? null : "13px 15px 10px 1px #e8e8e8"};
+
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 3;
 
   .draggable-main {
     width: 80%;
@@ -63,10 +65,9 @@ const SkillsSC = styled.div`
     padding-left: 20px;
     transition: color 3s;
     transition-delay: 1s;
-    color:  ${props => (props.hideShadow ? "white" : null)};
+    color: ${props => (props.hideShadow ? "white" : null)};
   }
 
-  ${"" /* todo make bellow a function */}
   .content > div:nth-child(1) {
     background: linear-gradient(135deg, #ffb8a8 0%, #ff5733 100%);
   }
@@ -183,6 +184,7 @@ const SkillsSC = styled.div`
   @media only screen and (min-width: 950px) {
     width: auto;
     margin: 15% 15% 0 0;
+    height: auto;
     grid-column-start: 4;
     grid-column-end: 5;
     grid-row-start: 2;
@@ -190,7 +192,6 @@ const SkillsSC = styled.div`
   }
 `
 
-// rename
 const fn = (order, down, originalIndex, curIndex, y) => index =>
   down && index === originalIndex
     ? {

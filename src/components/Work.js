@@ -14,85 +14,101 @@ import yawp from "../images/coverImages/yawp.jpg"
 import zorokovick from "../images/coverImages/zorokovick.png"
 import useWindowSize from "@rooks/use-window-size"
 import cursor from "../images/dragToSwap.png"
+import { animateScroll as scroll } from "react-scroll"
 
-// todo add a cool mouse takeover "drag to swap - click to view" in circle - rotate as gif
 // images are cut off at larger sizes
+// and at smaller sizes swipe is weird - check on device
 
-// could do a webgl background takeover when click on the piece of work or webgl infront and then slide
+// todo before go live
+// webgl takeover
 
 const WorkSC = styled.div`
-  height: auto;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
-  cursor: url(${cursor}) 30 30, 
-    auto;
+  cursor: url(${cursor}) 30 30, auto;
   border-radius: 5px;
+  margin-bottom: 40px;
+
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 2;
 
   h2 {
-    position: absolute
+    position: absolute;
     z-index: 1;
     margin-left: 20px;
     color: #8be0b7;
   }
 
- > div {
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  will-change: transform;
-}
-
- > div > div {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  width: 100%;
-  height: 100%;
-  will-change: transform;
-  box-shadow: 0 62.5px 125px -25px rgba(50, 50, 73, 0.5), 0 37.5px 75px -37.5px rgba(0, 0, 0, 0.6);
-  span {
-    color: #deeeed;
-    position: absolute;
-    bottom: 15px;
-    right: 20px;
+  > div {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
   }
-}
 
+  > div > div {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+    box-shadow: 0 62.5px 125px -25px rgba(50, 50, 73, 0.5),
+      0 37.5px 75px -37.5px rgba(0, 0, 0, 0.6);
+    span {
+      color: #deeeed;
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+    }
+  }
 
   @media only screen and (min-width: 950px) {
     width: auto;
     margin: 15% 15% 0 0;
+    height: auto;
     grid-column-start: 3;
     grid-column-end: 4;
-    grid-row-start: 2
+    grid-row-start: 2;
     grid-row-end: 3;
+    > div {
+      width: 100%;
+    }
   }
 `
 
 const pages = [
   [END, "END.", "endClothing"],
-  [Headless, "END. React", "headless"],
+  // [Headless, "END. React", "headless"],
   [ads, "Banner Ads", "bannerAds"],
   [adCalculator, "Ad Calculator", "creativeCalculator"],
   [matchBetting, "Match betting", "matchBetting"],
   [homeFromHome, "Home From Home", "homeFromHome"],
-  [yawp, "Yawp", "yawp"],
+  // [yawp, "Yawp", "yawp"],
   [zorokovick, "Zorokovick", "zorokovick"],
 ]
 
 const Work = memo(({ openProject, setProject, setBackground }) => {
   const [propsState, setPropsState] = useState(false)
   const [bindState, setBindState] = useState(false)
+  const index = useRef(0)
+  const { innerWidth } = useWindowSize()
+
+  const pageDivisions = window.innerWidth < 950 ? 100 : 4
+  const pageDivisions2 = window.innerWidth < 950 ? 1 : 2
 
   const [props, set] = useSprings(pages.length, i => ({
-    x: (i * window.innerWidth) / 4,
+    x: (i * window.innerWidth) / pageDivisions,
     sc: 1,
     display: "block",
   }))
 
   const bind = useGesture(
     ({ down, delta: [xDelta], direction: [xDir], distance, cancel }) => {
-      if (down && distance > window.innerWidth / 4 / 2)
+      if (down && distance > window.innerWidth / pageDivisions / pageDivisions2)
         cancel(
           (index.current = clamp(
             index.current + (xDir > 0 ? -1 : 1),
@@ -104,8 +120,11 @@ const Work = memo(({ openProject, setProject, setBackground }) => {
         if (i < index.current - 1 || i > index.current + 1)
           return { display: "none" }
         const x =
-          ((i - index.current) * window.innerWidth) / 4 + (down ? xDelta : 0)
-        const sc = down ? 1 - distance / window.innerWidth / 4 / 2 : 1
+          ((i - index.current) * window.innerWidth) / pageDivisions +
+          (down ? xDelta : 0)
+        const sc = down
+          ? 1 - distance / window.innerWidth / pageDivisions / pageDivisions2
+          : 1
         return { x, sc, display: "block" }
       })
     }
@@ -116,11 +135,8 @@ const Work = memo(({ openProject, setProject, setBackground }) => {
     setBindState(bind)
   })
 
-  const index = useRef(0)
-  const { innerWidth } = useWindowSize()
-
   if (propsState && bindState) {
-    if (innerWidth < 992) {
+    if (innerWidth < 950) {
       return (
         <WorkSC>
           <h2>Work</h2>
@@ -143,6 +159,10 @@ const Work = memo(({ openProject, setProject, setBackground }) => {
                 }}
                 onClick={() => {
                   openProject(true)
+                  scroll.scrollToTop({
+                    duration: 10,
+                    smooth: "easeInOutQuint",
+                  })
                   setProject(ProjectDictonary[pages[i][2]])
                 }}
               >

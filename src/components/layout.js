@@ -1,8 +1,9 @@
 import React from "react"
-import PropTypes from "prop-types"
 import "./layout.css"
 
-// should probaly add the same loader as old site with the gif
+// todo before go live
+// add the same loader as old site with the gif
+// rotate all mouse overs
 
 const Layout = ({ children }) => {
   return (

@@ -41,11 +41,15 @@ const BackgroundEffect = memo(() => {
   
               vec2 distortedPosition = vec2(uv.x + dispFactor * (disp.r*effectFactor), uv.y);
               vec2 distortedPosition2 = vec2(uv.x - (1.0 - dispFactor) * (disp.r*effectFactor), uv.y);
-              vec2 distortedPosition3 = vec2(uv.x - (2.0 - dispFactor) * (disp.r*effectFactor), uv.y);
+              vec2 distortedPosition3 = vec2(uv.x +  dispFactor * (disp.r*effectFactor), uv.y);
   
               vec4 _texture = texture2D(texture, distortedPosition);
               vec4 _texture2 = texture2D(texture2, distortedPosition2);
               vec4 _texture3 = texture2D(texture3, distortedPosition3);
+
+              // vec4 _textureMix1 = mix(_texture, _texture2, dispFactor)
+              // vec4 _textureMix2 = mix(_texture2, _texture3, dispFactor)
+              // vec4 finalTexture = mix(_textureMix1, _textureMix2, dispFactor)
   
               // mix only takes 2 images
               // to undo just return one mix
@@ -201,13 +205,9 @@ const HooksMain = styled.div`
   opacity: ${props => (props.background ? "1" : "0")};
   pointer-events: none;
 
-  ${"" /* todo make sure everything uses webkit */}
-  -webkit-transition-property: opacity;
-  -webkit-transition-duration: 1s;
-  -webkit-transition-delay: 1s;
   transition-property: opacity;
-  transition-duration: 1s;
-  transition-delay: 1s;
+  transition-duration: 0.6s;
+  transition-delay: 0.6s;
 `
 
 export default ({ background }) => (

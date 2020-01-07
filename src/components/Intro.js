@@ -3,17 +3,16 @@ import { useTransition, animated } from "react-spring"
 import styled from "styled-components"
 import cursor from "../images/clickToRestart.png"
 
-// update effect think we could do 100 times better
-// maybe add some diaginlas and rotations to each letter and cut out spaces
-
 const IntroSC = styled.div`
-  width: 100vw;
-  height: auto;
+  width: 100%;
+  height: 100%;
   position: relative;
   justify-content: left;
   display: flex;
   align-items: center;
   cursor: url(${cursor}) 30 30, auto;
+
+  padding: 20px;
 
   .transitions-item {
     width: 100%;
@@ -31,7 +30,9 @@ const IntroSC = styled.div`
 
   @media only screen and (min-width: 950px) {
     width: auto;
+    height: auto;
     margin: 15% 15% 0 0;
+    padding: 0;
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 1;

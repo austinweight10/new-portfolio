@@ -1,14 +1,13 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { useSpring, config, animated } from "react-spring"
+import useWindowSize from "@rooks/use-window-size"
 import cursor from "../images/clickToEnlarge.png"
+import close from "../images/close.png"
 
-// click and enlarges in style/smooth
-// mouse takeover - click to enlarge
-
-const AboutSC = styled(animated.div)`
-  width: 100vw;
-  height: auto;
+const AboutSC = styled.div`
+  width: calc(100% - 40px);
+  height: 100%;
   position: relative;
   overflow: scroll;
   border-radius: 5px;
@@ -17,18 +16,53 @@ const AboutSC = styled(animated.div)`
   cursor: url(${cursor}) 30 30, auto;
   will-change: width, height;
 
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row-start: 4;
+  grid-row-end: 4;
+
   @media only screen and (min-width: 950px) {
     width: auto;
+    height: auto;
     margin: 15% 15% 15% 0;
     grid-column-start: 3;
     grid-column-end: 4;
     grid-row-start: 3;
-    grid-row-end: 4;
+    grid-row-end: 5;
   }
 `
 
+const AboutOpenSC = styled(animated.div)`
+  position: fixed;
+  margin: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  z-index: 20000;
+  cursor: url(${close}) 30 30, auto;
+
+  .info {
+    background: linear-gradient(135deg, #afb3bd 0%, #82858c 100%);
+    width: 50%;
+    height: 50%;
+    border-radius: 5px;
+    overflow: scroll;
+    padding: 20px;
+    h2 {
+      font-size: 30px;
+      color: white;
+    }
+    p {
+      font-size: 18px;
+      line-height: 28px;
+      color: white;
+    }
+  }
+`
 const Info = () => (
-  <div>
+  <div className="info">
     <h2>About</h2>
     <div>
       <p>
@@ -72,32 +106,26 @@ const Info = () => (
 
 const About = () => {
   const [open, set] = useState(false)
+  const { innerWidth } = useWindowSize()
 
   const { size, ...rest } = useSpring({
     config: config.stiff,
     size: open ? "100%" : "0%",
     position: open ? "fixed" : "relative",
-    // gridColumnStart: open ? 1 : 3,
-    // gridColumnEnd: open ? 6 : 4,
-    // gridRowStart: open ? 1 : 3,
-    // gridRowEnd: 5,
     opacity: open ? "1" : "0.2",
+    display: open ? "flex" : "none",
   })
 
   return (
     <>
-      <AboutSC
-        // style={{ ...rest /*width: size, height: size*/ }}
-        onClick={() => set(open => !open)}
-      >
+      <AboutSC onClick={() => set(open => !open)}>
         <Info />
       </AboutSC>
-      <AboutSC
-        style={{ ...rest /*width: size, height: size*/ }}
-        onClick={() => set(open => !open)}
-      >
-        <Info />
-      </AboutSC>
+      {innerWidth > 950 && (
+        <AboutOpenSC style={{ ...rest }} onClick={() => set(open => !open)}>
+          <Info />
+        </AboutOpenSC>
+      )}
     </>
   )
 }

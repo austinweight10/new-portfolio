@@ -6,16 +6,15 @@ import useWindowSize from "@rooks/use-window-size"
 
 // text is getting blurry when zoomed
 // make sure doesn't zoom to much on larger screens add breakpoint
-// maybe text can be another topped effect
 
 const DownloadCVSC = styled.div`
-  width: 100vw;
-  height: auto;
+  width: 100%;
+  height: 100%;
   position: relative;
   display: flex;
   z-index: 100;
 
- > div {
+  > div {
     width: 50%;
     height: 50%;
     overflow: hidden;
@@ -25,7 +24,7 @@ const DownloadCVSC = styled.div`
     cursor: pointer;
     background: linear-gradient(135deg, #ffb8a8 0%, #ff5733 100%);
     border-radius: 5px;
-    margin: auto 0 0 auto ;
+    margin: auto 0 0 auto;
     -webkit-transition: all 200ms linear;
     -ms-transition: all 200ms linear;
     transition: all 200ms linear;
@@ -38,7 +37,7 @@ const DownloadCVSC = styled.div`
     }
     h4 {
       &:hover {
-        color: #82858c ;
+        color: #82858c;
       }
     }
   }
@@ -49,13 +48,37 @@ const DownloadCVSC = styled.div`
 
   @media only screen and (min-width: 950px) {
     width: auto;
+    height: auto;
     margin: 15% 0 0 15%;
     grid-column-start: 3;
     grid-column-end: 4;
-    grid-row-start: 1
+    grid-row-start: 1;
     grid-row-end: 2;
   }
-  
+`
+
+const DownloadCVMobileSC = styled.div`
+  width: 100%;
+  height: auto;
+  position: relative;
+  display: flex;
+  z-index: 100;
+  padding: 40px 0;
+
+  height: 60px;
+
+  background: linear-gradient(195deg, #ffb8a8 0%, #ff5733 100%);
+  border-radius: 5px;
+
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row-start: 7;
+  grid-row-end: 7;
+
+  h4 {
+    width: 100%;
+    text-align: center;
+  }
 `
 
 const calc = (x, y) => [
@@ -78,14 +101,21 @@ const DownloadCV = ({ mounted }) => {
     xys: [0, 0, 1],
     config: { mass: 5, tension: 350, friction: 40 },
   }))
-  const { innerWidth, innerHeight, outerHeight, outerWidth } = useWindowSize()
+  const { innerWidth } = useWindowSize()
 
   if (mounted) {
     if (innerWidth < 950) {
       return (
-        <DownloadCVSC>
+        <DownloadCVMobileSC
+          onClick={() => {
+            setTimeout(() => {
+              window.open(CV)
+            }, 700)
+            toggle(!state)
+          }}
+        >
           <h4>Download CV</h4>
-        </DownloadCVSC>
+        </DownloadCVMobileSC>
       )
     }
 

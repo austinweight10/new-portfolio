@@ -1,10 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-// add a max width to text
-// At larger screens three columns
 // add a slight tilt thing simular to download cv to each image that makes it slightly bigger adds drop shoddow and perspective
-
 // need css tanstions to load all the images/text - want it to really show off my skills
 
 // todo progress bar down the left had side
@@ -32,6 +29,7 @@ const ProjectSC = styled.div`
     p {
       column-count: 2;
       column-gap: 40px;
+      max-width: 1000px;
     }
   }
 `
@@ -52,6 +50,16 @@ const ImageWrapper = styled.div`
     video {
       width: 300px;
       margin: 40px 20px;
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    column-count: ${props => (props.title === "Banner Ads" ? null : "3")};
+    img {
+      width: ${props =>
+        props.title === "Banner Ads" ? "300px" : "calc(30vw - 80px)"};
+      margin: ${props =>
+        props.title === "Banner Ads" ? "40px 20px" : "40px auto"};
     }
   }
 `

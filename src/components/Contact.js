@@ -1,19 +1,18 @@
-import React from "react"
+import React, { useState } from "react"
 import { useSpring, animated, interpolate } from "react-spring"
 import { useGesture } from "react-with-gesture"
 import styled from "styled-components"
 
-// zoom in on hover
-// dropshadow
-// rename classes
-// once released let go - mabye needs more of a slide
-
-let triggeredEmail = false
-
 const ContactSC = styled.div`
-  width: 100vw;
-  height: auto;
+  width: 100%;
+  height: 100%;
   position: relative;
+  margin-bottom: 40px;
+
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 6;
+  grid-row-end: 6;
 
   .item {
     position: relative;
@@ -95,6 +94,7 @@ const ContactSC = styled.div`
   @media only screen and (min-width: 950px) {
     width: auto;
     margin: 0 15% 15% 0;
+    height: auto;
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 2;
@@ -104,6 +104,7 @@ const ContactSC = styled.div`
 
 const Contact = ({ hideShadow }) => {
   const [bind, { delta, down }] = useGesture()
+  const [triggeredEmail, setTriggeredEmail] = useState(false)
   const { x, bg, size } = useSpring({
     x: down ? delta[0] : 0,
     bg: `linear-gradient(120deg, ${
@@ -114,9 +115,9 @@ const Contact = ({ hideShadow }) => {
       setTimeout(() => {
         if (!triggeredEmail && down && name === "x") {
           window.location.href = "mailto:austinweight10@gmail.com"
-          triggeredEmail = true
+          setTriggeredEmail(true)
           setTimeout(() => {
-            triggeredEmail = false
+            setTriggeredEmail(false)
           }, 5000)
         }
       }, 500)
