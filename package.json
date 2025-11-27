@@ -8,7 +8,7 @@
     "@rooks/use-did-mount": "^3.2.2",
     "@rooks/use-window-size": "^3.2.2",
     "expo-three": "^4.0.3",
-    "gatsby": "^2.13.39",
+    "gatsby": "^5.15.0",
     "gatsby-image": "^2.2.6",
     "gatsby-plugin-manifest": "^2.2.4",
     "gatsby-plugin-offline": "^2.2.4",
